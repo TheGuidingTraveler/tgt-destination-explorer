@@ -171,7 +171,7 @@ function safe(text){return String(text).replace(/[&<>"']/g,c=>({'&':'&amp;','<':
 
 const wordpressArticles = [];
 let socialArticles=[];
-const platformVisible={blog:true,instagram:true,tiktok:false};
+const platformVisible={blog:true,instagram:true,tiktok:true};
 const SHEET_BASE='https://docs.google.com/spreadsheets/d/e/2PACX-1vR3OzMRHMyhtAKnoPhJg_eRNrSD04fmLixIzGTjCFe_rqNjzziLZrfk7AqK7_4kDoUap5yg-lSq1qCg/pub';
 const DESTINATIONS_CSV=SHEET_BASE+'?gid=937949440&single=true&output=csv';
 const CONTENT_CSV=SHEET_BASE+'?gid=0&single=true&output=csv';
