@@ -29,6 +29,43 @@ const destinations=[
 {name:'Brooklyn',country:'United States',region:'North America',lat:40.6782,lng:-73.9442,description:'Neighborhood stories from New York City.',image:'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=400&q=75'},
 {name:'Hot Springs',country:'United States',region:'North America',lat:34.5037,lng:-93.0552,description:'Historic bathhouses and natural beauty.',image:'https://images.unsplash.com/photo-1473448912268-2022ce9509d8?w=400&q=75'}
 ];
+ 
+const CONTENT_TYPES = {
+  guide: {
+    label: 'Travel Guides',
+    color: '#bd7d45',
+    icon: '📍'
+  },
+  story: {
+    label: 'Stories',
+    color: '#348ac5',
+    icon: '📷'
+  },
+  dark: {
+    label: 'After Dark',
+    color: '#8861b7',
+    icon: '🌙'
+  }
+};
+
+// Temporary classifications for our existing destinations.
+// We'll replace these with article-level classifications
+// when we connect the WordPress API.
+const destinationTypes = {
+  'Norway|Bergen': ['guide'],
+  'Norway|Oslo': ['guide'],
+  'Japan|Tokyo': ['story'],
+  'Guyana|Georgetown': ['guide'],
+  'United States|Austin': ['guide'],
+  'United States|Brooklyn': ['guide'],
+  'United States|Hot Springs': ['guide', 'dark']
+};
+
+function getDestinationTypes(destination) {
+  const key = `${destination.country}|${destination.name}`;
+  return destinationTypes[key] || ['guide'];
+}
+
 const flags={'Norway':'🇳🇴','Japan':'🇯🇵','Guyana':'🇬🇾','United States':'🇺🇸'};
 const regions=['All','North America','South America','Europe','Asia','Africa','Oceania'];
 let region='All',view='countries',selectedCountry=null,query='';
