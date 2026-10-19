@@ -9,18 +9,19 @@
 <title>Explore Destinations | The Guiding Traveler</title>
 <style>
 :root{--navy:#102734;--copper:#b87d51;--cream:#f5f0e7;--ink:#152935;--muted:#66747a}*{box-sizing:border-box}html,body{margin:0}body{background:var(--cream);color:var(--ink);font-family:Arial,Helvetica,sans-serif}.intro{text-align:center;padding:30px 18px 22px}.eyebrow{color:#a76e45;font-size:11px;font-weight:700;letter-spacing:2.6px}.intro h1{font-family:Georgia,serif;font-size:clamp(30px,4vw,44px);margin:12px 0}.intro p{max-width:720px;margin:auto;font-size:14px;line-height:1.65}.explorer{display:grid;grid-template-columns:minmax(300px,40%) minmax(0,1fr);gap:16px;max-width:1450px;margin:0 auto;padding:0 18px 24px}.sidebar{min-width:0}.search{width:100%;padding:14px 16px;border:1px solid #c7c7c4;border-radius:6px;background:#fff;font-size:14px}.filters,.views{display:flex;flex-wrap:wrap;gap:5px;margin:10px 0}.filters button,.views button,.back,.country-button{cursor:pointer}.filters button{border:0;background:var(--navy);color:#fff;border-radius:4px;padding:9px 10px;font-size:11px}.filters button.active{background:var(--copper)}.views{margin:12px 0 8px}.views button{background:transparent;border:1px solid #bcb3a6;color:var(--ink);padding:8px 12px;border-radius:5px;font-size:12px;font-weight:bold}.views button.active{background:var(--navy);color:white;border-color:var(--navy)}.summary{font-size:12px;color:var(--muted);padding:5px 0 10px}.results{height:480px;overflow-y:auto;padding-right:5px}.country-button{width:100%;display:flex;align-items:center;gap:12px;text-align:left;background:#fff;border:1px solid #e0d9cf;border-radius:7px;margin-bottom:8px;padding:14px}.country-button:hover,.country-button:focus-visible,.destination:hover,.destination:focus-visible{background:#eee5d8;outline:2px solid #b87d51;outline-offset:-2px}.country-flag{font-size:24px}.country-name{font-weight:bold;font-size:15px}.country-count{font-size:12px;color:var(--muted);margin-top:5px}.chevron{margin-left:auto;font-size:20px;color:var(--copper)}.back{border:0;background:transparent;color:#a16c47;font-size:12px;padding:8px 0 12px}.country-heading{font-family:Georgia,serif;font-size:23px;margin:0 0 12px}.destination{display:flex;gap:12px;align-items:center;border-bottom:1px solid #ddd6ca;padding:13px 5px;cursor:pointer}.thumb{width:104px;height:80px;flex-shrink:0;border-radius:5px;object-fit:cover;background:#d8d1c7}.destination h2{font-size:15px;margin:0 0 6px}.meta{font-size:10px;letter-spacing:1px;color:#a56b43;font-weight:bold}.destination p{font-size:12px;line-height:1.4;margin:6px 0 0}.arrow{margin-left:auto;border-radius:50%;background:var(--navy);color:#fff;padding:8px}.map-wrap{position:relative;min-width:0}#map{height:650px;border-radius:8px;background:#102734;overflow:hidden}.map-note{position:absolute;bottom:12px;left:12px;z-index:500;background:#102734ed;color:white;border-radius:5px;padding:9px 12px;font-size:11px;pointer-events:none}.leaflet-popup-content-wrapper{border-radius:8px}.popup h3{margin:0 0 6px;font-size:16px}.popup p{font-size:12px;line-height:1.5}.popup a{color:#9b6037;font-weight:bold}.footer{background:var(--navy);color:#e6e9e8;text-align:center;padding:18px;font-size:12px}.empty{padding:25px 8px;color:#666} .pin{width:15px;height:15px;background:var(--pin-color,var(--copper));border:2px solid #fff;border-radius:50%;box-shadow:0 1px 8px #000a}.country-pin{width:34px;height:34px;background:#f6f0e5;border:3px solid #b87d51;border-radius:50%;display:grid;place-items:center;color:#102734;font-weight:bold;font-size:12px;box-shadow:0 2px 12px #0008}.map-error{position:absolute;z-index:1000;top:15px;left:55px;right:15px;background:#fff8ed;padding:12px;border-radius:6px;font-size:12px;display:none}@media(max-width:800px){.explorer{grid-template-columns:1fr}.results{height:340px}#map{height:440px}.intro{padding-top:26px}}@media(max-width:420px){.thumb{width:85px;height:72px}.filters button{padding:9px 8px}}
+.platform-filters{display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin:9px 0 4px;font-size:12px;color:var(--ink)}.platform-filters span{font-size:10px;letter-spacing:1px;font-weight:bold;color:var(--muted)}.platform-filters label{cursor:pointer;white-space:nowrap}.platform-filters input{accent-color:var(--copper)}
 </style>
 </head>
 <body>
 <header class="intro"><div class="eyebrow">✦ EXPLORE THE WORLD</div><h1>Find Your Next Destination</h1><p>Search for a city or country, browse by region, or explore the map to discover stories from The Guiding Traveler.</p></header>
-<main class="explorer"><section class="sidebar" aria-label="Destination directory"><input class="search" id="search" type="search" placeholder="Search Tokyo, Japan, Norway…" aria-label="Search destinations"><div class="filters" id="filters" aria-label="Filter by region"></div><div class="views" id="views" aria-label="Browse destinations"><button data-view="countries" class="active">Countries</button><button data-view="cities">All cities</button></div><div class="summary" id="summary" aria-live="polite"></div><div class="results" id="results"></div></section><section class="map-wrap" aria-label="Interactive destination map"><div id="map"></div><div class="map-error" id="map-error"></div><div class="map-note">● Select a country or city to explore</div></section></main>
+<main class="explorer"><section class="sidebar" aria-label="Destination directory"><input class="search" id="search" type="search" placeholder="Search Tokyo, Japan, Norway…" aria-label="Search destinations"><div class="filters" id="filters" aria-label="Filter by region"></div><div class="views" id="views" aria-label="Browse destinations"><button data-view="countries" class="active">Countries</button><button data-view="cities">All cities</button></div><div class="platform-filters" id="platform-filters" aria-label="Content platforms"><span>SHOW:</span><label><input type="checkbox" id="show-blog" checked> Blogs</label><label><input type="checkbox" id="show-instagram" checked> Instagram</label><label><input type="checkbox" id="show-tiktok"> TikTok</label></div><div class="summary" id="summary" aria-live="polite"></div><div class="results" id="results"></div></section><section class="map-wrap" aria-label="Interactive destination map"><div id="map"></div><div class="map-error" id="map-error"></div><div class="map-note">● Select a country or city to explore</div></section></main>
 <footer class="footer">REAL DESTINATIONS &nbsp; ✦ &nbsp; PHOTOS & STORIES &nbsp; ✦ &nbsp; TRAVEL GUIDES &nbsp; ✦ &nbsp; AFTER DARK</footer>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <script>
 'use strict';
 // STARTER LOCATIONS. Replace/add destinations as published content is verified.
 // To attach a published article, add: url:'https://theguidingtraveler.com/your-article/'
-const destinations=[
+let destinations=[
 {name:'Bergen',country:'Norway',region:'Europe',lat:60.3913,lng:5.3221,description:'Colorful harbor streets and Norway’s dramatic western coastline.',image:'https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=400&q=75'},
 {name:'Oslo',country:'Norway',region:'Europe',lat:59.9139,lng:10.7522,description:'Architecture, culture, and city adventures in Norway’s capital.',image:'https://images.unsplash.com/photo-1513622470522-26c3c8a854bc?w=400&q=75'},
 {name:'Tokyo',country:'Japan',region:'Asia',lat:35.6762,lng:139.6503,description:'Neighborhoods, food, and discoveries across Tokyo.',image:'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=400&q=75'},
@@ -126,15 +127,14 @@ function getDestinationTypes(destination) {
   return destinationTypes[key] || ['guide'];
 }
 
-const flags={'Norway':'🇳🇴','Japan':'🇯🇵','Guyana':'🇬🇾','United States':'🇺🇸','Mexico':'🇲🇽',
-'Barbados':'🇧🇧',};
+const flags={'Norway':'🇳🇴','Japan':'🇯🇵','Guyana':'🇬🇾','United States':'🇺🇸','Mexico':'🇲🇽','Barbados':'🇧🇧','United Kingdom':'🇬🇧','Germany':'🇩🇪','Canada':'🇨🇦','Ireland':'🇮🇪','Cayman Islands':'🇰🇾'};
 const regions=['All','North America','South America','Europe','Asia','Africa','Oceania'];
 let region='All',view='countries',selectedCountry=null,query='';
 const filters=document.getElementById('filters'),results=document.getElementById('results'),summary=document.getElementById('summary');
 const map=L.map('map',{scrollWheelZoom:false,worldCopyJump:true}).setView([24,-20],2);
 // Enter your existing MapTiler public browser key here. Keep the quotes.
-const MAPTILER_KEY='IbCRlpP7NPxjKbHHSX1U';
-if(MAPTILER_KEY==='PASTE_YOUR_MAPTILER_KEY_HERE'){
+const MAPTILER_KEY='YOUR_MAPTILER_API_KEY';
+if(MAPTILER_KEY==='YOUR_MAPTILER_API_KEY'||MAPTILER_KEY==='PASTE_YOUR_MAPTILER_KEY_HERE'){
  document.getElementById('map-error').textContent='Add your existing MapTiler key in the MAPTILER_KEY line to display the map.';
  document.getElementById('map-error').style.display='block';
 }else{
@@ -163,13 +163,91 @@ function cityIcon(destination) {
 }
 const countryIcon=n=>L.divIcon({className:'',html:'<div class="country-pin">'+n+'</div>',iconSize:[34,34],iconAnchor:[17,17]});
 const cityMarkers=new Map(),countryMarkers=new Map();
-const countries=[...new Set(destinations.map(d=>d.country))].sort();
+let countries=[...new Set(destinations.map(d=>d.country))].sort();
 function countryCities(c){return destinations.filter(d=>d.country===c)}
 function countryRegion(c){return countryCities(c)[0].region}
 function countryCoords(c){const list=countryCities(c);return [list.reduce((s,d)=>s+d.lat,0)/list.length,list.reduce((s,d)=>s+d.lng,0)/list.length]}
 function safe(text){return String(text).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 
 const wordpressArticles = [];
+let socialArticles=[];
+const platformVisible={blog:true,instagram:true,tiktok:false};
+const SHEET_BASE='https://docs.google.com/spreadsheets/d/e/2PACX-1vR3OzMRHMyhtAKnoPhJg_eRNrSD04fmLixIzGTjCFe_rqNjzziLZrfk7AqK7_4kDoUap5yg-lSq1qCg/pub';
+const DESTINATIONS_CSV=SHEET_BASE+'?gid=937949440&single=true&output=csv';
+const CONTENT_CSV=SHEET_BASE+'?gid=0&single=true&output=csv';
+function normalizeId(value){return String(value||'').trim().toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')}
+function parseCSV(csv){
+  const rows=[];let row=[],field='',quoted=false;
+  csv=csv.replace(/^\uFEFF/,'');
+  for(let i=0;i<csv.length;i++){
+    const ch=csv[i];
+    if(ch==='"'){
+      if(quoted&&csv[i+1]==='"'){field+='"';i++}else quoted=!quoted;
+    }else if(ch===','&&!quoted){row.push(field);field=''}
+    else if((ch==='\n'||ch==='\r')&&!quoted){
+      if(ch==='\r'&&csv[i+1]==='\n')i++;
+      row.push(field);if(row.some(v=>v.trim()))rows.push(row);row=[];field='';
+    }else field+=ch;
+  }
+  row.push(field);if(row.some(v=>v.trim()))rows.push(row);
+  if(!rows.length)return [];
+  const headers=rows.shift().map(h=>h.trim().toLowerCase().replace(/[^a-z0-9]/g,''));
+  return rows.map(values=>Object.fromEntries(headers.map((h,i)=>[h,(values[i]||'').trim()])));
+}
+function field(row,...names){for(const name of names){const value=row[name.replace(/[^a-z0-9]/gi,'').toLowerCase()];if(value)return value}return ''}
+function validURL(url){try{const u=new URL(url);return /^https?:$/.test(u.protocol)?u.href:''}catch{return ''}}
+function destinationId(d){return normalizeId(d.id||((d.country==='United States'?'us':d.country)+'-'+d.name))}
+function destinationVisible(d){
+  const id=destinationId(d),key=d.country+'|'+d.name;
+  const blog=wordpressArticles.some(a=>a.location===key)||Object.values(articleLocations).includes(key);
+  const social=socialArticles.filter(a=>a.locationId===id);
+  if(!blog&&!social.length)return true; // preserve places while their content is being prepared
+  return (platformVisible.blog&&blog)||social.some(a=>platformVisible[a.platform]);
+}
+async function loadSheets(){
+  const [destResponse,contentResponse]=await Promise.allSettled([
+    fetch(DESTINATIONS_CSV).then(r=>{if(!r.ok)throw Error('Destinations CSV '+r.status);return r.text()}),
+    fetch(CONTENT_CSV).then(r=>{if(!r.ok)throw Error('Content CSV '+r.status);return r.text()})
+  ]);
+  if(destResponse.status==='fulfilled'){
+    const rows=parseCSV(destResponse.value);
+    const known=new Map(destinations.map(d=>[destinationId(d),d]));
+    const imported=[];
+    for(const r of rows){
+      const id=normalizeId(field(r,'locationid','id'));
+      const name=field(r,'city','destination','location','name');
+      const country=field(r,'country');
+      const regionName=field(r,'region','continent');
+      const lat=Number(field(r,'latitude','lat'));
+      const lng=Number(field(r,'longitude','lng','lon'));
+      if(!id||!name||!country||!regionName||!Number.isFinite(lat)||!Number.isFinite(lng)||Math.abs(lat)>90||Math.abs(lng)>180)continue;
+      const old=known.get(id)||destinations.find(d=>d.name===name&&d.country===country);
+      imported.push({id,name,country,region:regionName,lat,lng,description:field(r,'description')||old?.description||'Explore photos, videos and stories from '+name+'.',image:validURL(field(r,'image','imageurl','photo','thumbnail'))||old?.image||''});
+    }
+    if(imported.length){
+      // Keep existing editorial descriptions and images when the sheet omits them.
+      const ids=new Set(imported.map(d=>d.id));
+      destinations=[...imported,...destinations.filter(d=>!ids.has(destinationId(d)))];
+      rebuildMarkers();
+    }else console.warn('Destinations sheet returned no valid locations; using existing map. Check CSV headers.');
+  }else console.warn('Destinations feed unavailable; using existing map.',destResponse.reason);
+  if(contentResponse.status==='fulfilled'){
+    const rows=parseCSV(contentResponse.value);
+    socialArticles=rows.map(r=>{
+      const platform=field(r,'platform','type','source').toLowerCase().trim();
+      const url=validURL(field(r,'url','link','posturl','contenturl','instagramlink','tiktoklink'));
+      return {locationId:normalizeId(field(r,'locationid','destinationid','placeid')),platform:platform==='instagram'||platform==='tiktok'?platform:'',title:field(r,'content','title','caption','description','posttitle')||'View post',url};
+    }).filter(a=>a.locationId&&a.platform&&a.url);
+  }else console.warn('Content feed unavailable; social posts not loaded.',contentResponse.reason);
+  rebuildMarkers();render();
+}
+for(const platform of ['blog','instagram','tiktok']){
+  document.getElementById('show-'+platform).addEventListener('change',e=>{
+    platformVisible[platform]=e.target.checked;
+    rebuildMarkers();selectedCountry=null;render();
+  });
+}
+
 
 const articleLocations = {
   267:'Norway|Bergen',
@@ -223,6 +301,7 @@ async function loadWordPressArticles() {
     cityMarkers.forEach((marker, index) => {
       marker.setPopupContent(popupCity(destinations[index]));
     });
+    render();
 
   } catch (error) {
     console.error('Could not load WordPress articles:', error);
@@ -230,51 +309,48 @@ async function loadWordPressArticles() {
 }
 
 function popupCity(d) {
-  const key = `${d.country}|${d.name}`;
-  const articles = wordpressArticles.filter(a => a.location === key);
-
-  let html =
-    '<div class="popup">' +
-    '<h3>' + safe(d.name + ', ' + d.country) + '</h3>' +
-    '<p>' + safe(d.description) + '</p>';
-
-  if (!articles.length) {
-    html += '<p>Stories coming soon.</p>';
-  } else {
-    articles.forEach(article => {
-      const type = CONTENT_TYPES[article.type];
-
-      html +=
-        '<p style="border-top:1px solid #ddd;padding-top:9px">' +
-        '<span style="color:' + type.color + ';font-weight:bold">' +
-        type.icon + ' ' + type.label +
-        '</span>' +
-        '<br><a href="' + safe(article.url) +
-        '" target="_blank" rel="noopener noreferrer">' +
-        safe(article.title) + ' →</a></p>';
-    });
+  const key=d.country+'|'+d.name;
+  const articles=platformVisible.blog?wordpressArticles.filter(a=>a.location===key):[];
+  const social=socialArticles.filter(a=>a.locationId===destinationId(d)&&platformVisible[a.platform]);
+  social.sort((a,b)=>({instagram:0,tiktok:1}[a.platform]-{instagram:0,tiktok:1}[b.platform]));
+  let html='<div class="popup"><h3>'+safe(d.name+', '+d.country)+'</h3><p>'+safe(d.description)+'</p>';
+  for(const article of articles){
+    const type=CONTENT_TYPES[article.type]||CONTENT_TYPES.guide;
+    html+='<p style="border-top:1px solid #ddd;padding-top:9px"><span style="color:'+type.color+';font-weight:bold">'+type.icon+' '+type.label+'</span><br><a href="'+safe(article.url)+'" target="_blank" rel="noopener noreferrer">'+safe(article.title)+' →</a></p>';
   }
-
-  return html + '</div>';
+  for(const post of social){
+    const instagram=post.platform==='instagram';
+    html+='<p style="border-top:1px solid #ddd;padding-top:9px"><span style="color:'+(instagram?'#c04a80':'#178d91')+';font-weight:bold">'+(instagram?'📸 Instagram':'🎬 TikTok')+'</span><br><a href="'+safe(post.url)+'" target="_blank" rel="noopener noreferrer">'+safe(post.title)+' →</a></p>';
+  }
+  if(!articles.length&&!social.length)html+='<p>No matching content for these filters yet.</p>';
+  return html+'</div>';
 }
 
-destinations.forEach((d, i) => {
-  const m = L.marker([d.lat, d.lng], {
-    icon: cityIcon(d)
-  }).bindPopup(popupCity(d));
-
-  cityMarkers.set(i, m);
-});
-
-countries.forEach(c=>{const m=L.marker(countryCoords(c),{icon:countryIcon(countryCities(c).length)});m.bindPopup('<div class="popup"><h3>'+safe(c)+'</h3><p>'+countryCities(c).length+' destinations</p></div>');m.on('click',()=>{selectedCountry=c;view='countries';query='';document.getElementById('search').value='';render();zoomCountry(c)});countryMarkers.set(c,m)});
+function rebuildMarkers() {
+  cityMarkers.forEach(m => map.removeLayer(m));
+  countryMarkers.forEach(m => map.removeLayer(m));
+  cityMarkers.clear(); countryMarkers.clear();
+  countries=[...new Set(destinations.map(d=>d.country))].sort();
+  destinations.forEach((d,i)=>{
+    cityMarkers.set(i,L.marker([d.lat,d.lng],{icon:cityIcon(d)}).bindPopup(popupCity(d)));
+  });
+  countries.forEach(c=>{
+    const m=L.marker(countryCoords(c),{icon:countryIcon(countryCities(c).length)});
+    m.bindPopup('<div class="popup"><h3>'+safe(c)+'</h3><p>'+countryCities(c).length+' destinations</p></div>');
+    m.on('click',()=>{selectedCountry=c;view='countries';query='';document.getElementById('search').value='';render();zoomCountry(c)});
+    countryMarkers.set(c,m);
+  });
+}
+rebuildMarkers();
 regions.forEach(r=>{const b=document.createElement('button');b.type='button';b.textContent=r;b.dataset.region=r;b.onclick=()=>{region=r;selectedCountry=null;render();fitVisible()};filters.appendChild(b)});
 document.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>{view=b.dataset.view;selectedCountry=null;render();fitVisible()});
 document.getElementById('search').addEventListener('input',e=>{query=e.target.value.trim().toLocaleLowerCase();selectedCountry=null;render();fitVisible()});
-function filteredCities(){return destinations.filter(d=>(region==='All'||d.region===region)&&(!query||[d.name,d.country,d.region,d.description].some(s=>s.toLocaleLowerCase().includes(query))))}
-function makeCity(d){const row=document.createElement('article');row.className='destination';row.tabIndex=0;row.setAttribute('role','button');row.setAttribute('aria-label','Show '+d.name+', '+d.country+' on map');const img=document.createElement('img');img.className='thumb';img.src=d.image;img.alt='';img.loading='lazy';const content=document.createElement('div');const title=document.createElement('h2');title.textContent=d.name+', '+d.country;const meta=document.createElement('div');meta.className='meta';meta.textContent=d.region.toUpperCase();const p=document.createElement('p');p.textContent=d.description;content.append(title,meta,p);const arrow=document.createElement('span');arrow.className='arrow';arrow.textContent='➜';row.append(img,content,arrow);const activate=()=>{map.flyTo([d.lat,d.lng],6,{duration:.7});const index=destinations.indexOf(d);setTimeout(()=>cityMarkers.get(index).openPopup(),750)};row.onclick=activate;row.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();activate()}};return row}
+function filteredCities(){return destinations.filter(d=>destinationVisible(d)&&(region==='All'||d.region===region)&&(!query||[d.name,d.country,d.region,d.description].some(s=>s.toLocaleLowerCase().includes(query))))}
+function makeCity(d){const row=document.createElement('article');row.className='destination';row.tabIndex=0;row.setAttribute('role','button');row.setAttribute('aria-label','Show '+d.name+', '+d.country+' on map');const img=document.createElement('img');img.className='thumb';if(d.image){img.src=d.image;img.onerror=()=>{img.style.display='none'}}else img.style.display='none';img.alt='';img.loading='lazy';const content=document.createElement('div');const title=document.createElement('h2');title.textContent=d.name+', '+d.country;const meta=document.createElement('div');meta.className='meta';meta.textContent=d.region.toUpperCase();const p=document.createElement('p');p.textContent=d.description;content.append(title,meta,p);const arrow=document.createElement('span');arrow.className='arrow';arrow.textContent='➜';row.append(img,content,arrow);const activate=()=>{map.flyTo([d.lat,d.lng],6,{duration:.7});const index=destinations.indexOf(d);setTimeout(()=>cityMarkers.get(index).openPopup(),750)};row.onclick=activate;row.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();activate()}};return row}
 function zoomCountry(c){const points=countryCities(c).map(d=>[d.lat,d.lng]);if(points.length===1){map.flyTo(points[0],5)}else{map.fitBounds(L.latLngBounds(points).pad(.65),{maxZoom:6})}}
 function fitVisible(){const list=filteredCities();if(list.length>0){map.fitBounds(L.latLngBounds(list.map(d=>[d.lat,d.lng])).pad(.3),{maxZoom:list.length===1?5:6})}}
 function render(){filters.querySelectorAll('button').forEach(b=>{const active=b.dataset.region===region;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active))});document.querySelectorAll('[data-view]').forEach(b=>{const active=b.dataset.view===view;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active))});results.replaceChildren();const list=filteredCities();const visibleCountries=[...new Set(list.map(d=>d.country))].sort();const drill=selectedCountry&&!query&&view==='countries'&&visibleCountries.includes(selectedCountry);const showCities=view==='cities'||Boolean(query)||drill;summary.textContent=list.length+' cities · '+visibleCountries.length+' countries'+(drill?' · '+selectedCountry:'');if(drill){const back=document.createElement('button');back.className='back';back.textContent='← All countries';back.onclick=()=>{selectedCountry=null;render();fitVisible()};results.appendChild(back);const h=document.createElement('h2');h.className='country-heading';h.textContent=(flags[selectedCountry]||'🌍')+' '+selectedCountry;results.appendChild(h)}if(showCities){const displayed=drill?list.filter(d=>d.country===selectedCountry):list;displayed.forEach(d=>results.appendChild(makeCity(d)))}else{visibleCountries.forEach(c=>{const b=document.createElement('button');b.className='country-button';const flag=document.createElement('span');flag.className='country-flag';flag.textContent=flags[c]||'🌍';const label=document.createElement('span');const title=document.createElement('div');title.className='country-name';title.textContent=c;const sub=document.createElement('div');sub.className='country-count';sub.textContent=list.filter(d=>d.country===c).length+' destinations · '+countryRegion(c);label.append(title,sub);const arrow=document.createElement('span');arrow.className='chevron';arrow.textContent='›';b.append(flag,label,arrow);b.onclick=()=>{selectedCountry=c;render();zoomCountry(c)};results.appendChild(b)})}if(!list.length){const p=document.createElement('p');p.className='empty';p.textContent='No destinations match your search.';results.appendChild(p)}for(const m of cityMarkers.values())map.removeLayer(m);for(const m of countryMarkers.values())map.removeLayer(m);if(showCities){const visible=drill?list.filter(d=>d.country===selectedCountry):list;visible.forEach(d=>cityMarkers.get(destinations.indexOf(d)).addTo(map))}else{visibleCountries.forEach(c=>countryMarkers.get(c).addTo(map))}}
 render();setTimeout(()=>map.invalidateSize(),150);
 loadWordPressArticles();
+loadSheets();
 </script></body></html>
