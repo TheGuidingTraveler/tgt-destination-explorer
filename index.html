@@ -1,30 +1,16 @@
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>The Guiding Traveler | Destination Explorer</title>
-  <style>
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      background: #f4f0e7;
-      color: #182b35;
-      font-family: Georgia, serif;
-      text-align: center;
-    }
-    h1 { font-size: 42px; }
-    p { font-size: 18px; }
-  </style>
-</head>
-<body>
-  <main>
-    <h1>Explore the World</h1>
-    <p>The Guiding Traveler Destination Explorer</p>
-    <p>Our next adventure starts here. 🌍</p>
-  </main>
-</body>
-</html>
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Explore Destinations | The Guiding Traveler</title><link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyo0uLw7jA=" crossorigin=""><style>
+:root{--navy:#102734;--copper:#b87d51;--cream:#f5f0e7;--ink:#152935}*{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--ink);font-family:Arial,Helvetica,sans-serif}.intro{text-align:center;padding:32px 18px 22px}.eyebrow{color:#a76e45;font-size:11px;font-weight:700;letter-spacing:2.6px}.intro h1{font-family:Georgia,serif;font-size:clamp(30px,4vw,44px);margin:12px 0}.intro p{max-width:680px;margin:auto;font-size:14px;line-height:1.65}.explorer{display:grid;grid-template-columns:minmax(290px,40%) 1fr;gap:16px;max-width:1450px;margin:0 auto;padding:0 18px 24px}.sidebar{min-width:0}.search{width:100%;padding:14px 16px;border:1px solid #c7c7c4;border-radius:6px;background:#fff;font-size:14px}.filters{display:flex;flex-wrap:wrap;gap:5px;margin:10px 0}.filters button{border:0;background:var(--navy);color:#fff;border-radius:4px;padding:10px 11px;font-size:11px;cursor:pointer}.filters button.active{background:var(--copper)}.results{height:510px;overflow-y:auto;padding-right:5px}.destination{display:flex;gap:12px;align-items:center;border-bottom:1px solid #ddd6ca;padding:14px 4px;cursor:pointer}.destination:hover,.destination:focus{background:#eee5d8;outline:0}.thumb{width:104px;height:80px;flex-shrink:0;border-radius:5px;object-fit:cover;background:#d8d1c7}.destination h2{font-size:15px;margin:0 0 6px}.meta{font-size:10px;letter-spacing:1px;color:#a56b43;font-weight:bold}.destination p{font-size:12px;line-height:1.4;margin:6px 0 0}.arrow{margin-left:auto;border-radius:50%;background:var(--navy);color:#fff;padding:8px}.map-wrap{position:relative;min-width:0}#map{height:612px;border-radius:8px;background:#102734}.map-note{position:absolute;bottom:12px;left:12px;z-index:500;background:#102734ed;color:white;border-radius:5px;padding:9px 12px;font-size:11px;pointer-events:none}.leaflet-popup-content-wrapper{border-radius:8px}.popup h3{margin:0 0 6px;font-size:16px}.popup p{font-size:12px;line-height:1.5}.popup a{color:#9b6037;font-weight:bold}.footer{background:var(--navy);color:#e6e9e8;text-align:center;padding:18px;font-size:12px}.empty{padding:25px 8px;color:#666}.pin{width:14px;height:14px;background:var(--copper);border:2px solid #fff;border-radius:50%;box-shadow:0 1px 8px #000a}@media(max-width:800px){.explorer{grid-template-columns:1fr}.results{height:350px}#map{height:430px}.intro{padding-top:26px}}@media(max-width:420px){.thumb{width:85px;height:72px}.filters button{padding:9px 8px}}
+</style></head><body><header class="intro"><div class="eyebrow">✦ EXPLORE THE WORLD</div><h1>Find Your Next Destination</h1><p>Search for a place, browse by region, or explore the map to discover travel stories from The Guiding Traveler.</p></header><main class="explorer"><section class="sidebar" aria-label="Destination directory"><input class="search" id="search" type="search" placeholder="Search destinations (e.g. Norway, Japan…)" aria-label="Search destinations"><div class="filters" id="filters" aria-label="Filter destinations by region"></div><div class="results" id="results" aria-live="polite"></div></section><section class="map-wrap" aria-label="Interactive destination map"><div id="map"></div><div class="map-note">● Travel destinations · Select a pin to explore</div></section></main><footer class="footer">REAL DESTINATIONS &nbsp; ✦ &nbsp; PHOTOS & STORIES &nbsp; ✦ &nbsp; TRAVEL GUIDES &nbsp; ✦ &nbsp; AFTER DARK</footer><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script><script>
+// Initial demonstration locations. We will replace/expand these with verified published articles.
+const destinations=[
+{name:'Bergen, Norway',region:'Europe',lat:60.3913,lng:5.3221,description:'Colorful harbor streets and Norway’s dramatic western coastline.',image:'https://images.unsplash.com/photo-1531366936337-7c912a4589a7?w=400&q=75'},
+{name:'Oslo, Norway',region:'Europe',lat:59.9139,lng:10.7522,description:'Architecture, culture, and city adventures in Norway’s capital.',image:'https://images.unsplash.com/photo-1513622470522-26c3c8a854bc?w=400&q=75'},
+{name:'Tokyo, Japan',region:'Asia',lat:35.6762,lng:139.6503,description:'Neighborhoods, food, and discoveries across Tokyo.',image:'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=400&q=75'},
+{name:'Georgetown, Guyana',region:'South America',lat:6.8013,lng:-58.1551,description:'A journey through Guyana’s vibrant capital.',image:'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=400&q=75'},
+{name:'Austin, Texas',region:'North America',lat:30.2672,lng:-97.7431,description:'Music, food, and the energy of the Texas capital.',image:'https://images.unsplash.com/photo-1531218150217-54595bc2b934?w=400&q=75'},
+{name:'Brooklyn, New York',region:'North America',lat:40.6782,lng:-73.9442,description:'Neighborhood stories from New York City.',image:'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=400&q=75'},
+{name:'Hot Springs, Arkansas',region:'North America',lat:34.5037,lng:-93.0552,description:'Historic bathhouses and natural beauty.',image:'https://images.unsplash.com/photo-1473448912268-2022ce9509d8?w=400&q=75'}
+];
+const regions=['All','North America','South America','Europe','Asia','Africa','Oceania'];let region='All';let query='';const map=L.map('map',{scrollWheelZoom:false}).setView([24,-20],2);L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{attribution:'&copy; OpenStreetMap contributors &copy; CARTO',maxZoom:18}).addTo(map);const markers=new Map();const icon=L.divIcon({className:'',html:'<div class="pin"></div>',iconSize:[14,14],iconAnchor:[7,7]});destinations.forEach((d,i)=>{const marker=L.marker([d.lat,d.lng],{icon}).addTo(map);marker.bindPopup(`<div class="popup"><h3>${d.name}</h3><p>${d.description}</p><p>Stories and social links coming next.</p></div>`);markers.set(i,marker)});const filters=document.getElementById('filters'),results=document.getElementById('results');regions.forEach(r=>{const b=document.createElement('button');b.textContent=r;b.type='button';b.onclick=()=>{region=r;render()};b.dataset.region=r;filters.appendChild(b)});document.getElementById('search').addEventListener('input',e=>{query=e.target.value.toLowerCase().trim();render()});function render(){filters.querySelectorAll('button').forEach(b=>{b.classList.toggle('active',b.dataset.region===region);b.setAttribute('aria-pressed',String(b.dataset.region===region))});results.replaceChildren();let count=0;destinations.forEach((d,i)=>{const match=(region==='All'||region===d.region)&&(`${d.name} ${d.description} ${d.region}`.toLowerCase().includes(query));const marker=markers.get(i);if(match){marker.addTo(map);count++;const row=document.createElement('article');row.className='destination';row.tabIndex=0;row.setAttribute('role','button');row.setAttribute('aria-label',`Show ${d.name} on map`);const img=document.createElement('img');img.className='thumb';img.src=d.image;img.alt='';img.loading='lazy';const content=document.createElement('div');const title=document.createElement('h2');title.textContent=d.name;const meta=document.createElement('div');meta.className='meta';meta.textContent=d.region.toUpperCase();const p=document.createElement('p');p.textContent=d.description;content.append(title,meta,p);const arrow=document.createElement('span');arrow.className='arrow';arrow.textContent='➜';row.append(img,content,arrow);const activate=()=>{map.flyTo([d.lat,d.lng],5,{duration:.7});setTimeout(()=>marker.openPopup(),750)};row.addEventListener('click',activate);row.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();activate()}});results.appendChild(row)}else{map.removeLayer(marker)}});if(!count){const p=document.createElement('p');p.className='empty';p.textContent='No destinations match your search.';results.appendChild(p)}}render();
+</script></body></html>
