@@ -27,7 +27,61 @@ const destinations=[
 {name:'Georgetown',country:'Guyana',region:'South America',lat:6.8013,lng:-58.1551,description:'A journey through Guyana’s vibrant capital.',image:'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=400&q=75'},
 {name:'Austin',country:'United States',region:'North America',lat:30.2672,lng:-97.7431,description:'Music, food, and the energy of the Texas capital.',image:'https://images.unsplash.com/photo-1531218150217-54595bc2b934?w=400&q=75'},
 {name:'Brooklyn',country:'United States',region:'North America',lat:40.6782,lng:-73.9442,description:'Neighborhood stories from New York City.',image:'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=400&q=75'},
-{name:'Hot Springs',country:'United States',region:'North America',lat:34.5037,lng:-93.0552,description:'Historic bathhouses and natural beauty.',image:'https://images.unsplash.com/photo-1473448912268-2022ce9509d8?w=400&q=75'}
+{name:'Hot Springs',country:'United States',region:'North America',lat:34.5037,lng:-93.0552,description:'Historic bathhouses and natural beauty.',image:'https://images.unsplash.com/photo-1473448912268-2022ce9509d8?w=400&q=75'},
+ {
+  name:'Tyler',
+  country:'United States',
+  region:'North America',
+  lat:32.3513,
+  lng:-95.3011,
+  description:'Rose gardens, East Texas history, and small-city charm.',
+  image:'https://images.unsplash.com/photo-1473448912268-2022ce9509d8?w=400&q=75'
+},
+{
+  name:'College Station',
+  country:'United States',
+  region:'North America',
+  lat:30.62798,
+  lng:-96.33441,
+  description:'Texas A&M traditions and the heart of Aggieland.',
+  image:'https://images.unsplash.com/photo-1531218150217-54595bc2b934?w=400&q=75'
+},
+{
+  name:'Galveston',
+  country:'United States',
+  region:'North America',
+  lat:29.3013,
+  lng:-94.7977,
+  description:'Historic architecture and Gulf Coast island adventures.',
+  image:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&q=75'
+},
+{
+  name:'Mammoth Cave',
+  country:'United States',
+  region:'North America',
+  lat:37.1870,
+  lng:-86.1005,
+  description:'Explore the extraordinary underground world of Mammoth Cave National Park.',
+  image:'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=400&q=75'
+},
+{
+  name:'Mexico City',
+  country:'Mexico',
+  region:'North America',
+  lat:19.4326,
+  lng:-99.1332,
+  description:'Ancient history, vibrant neighborhoods, and unforgettable food.',
+  image:'https://images.unsplash.com/photo-1512813195386-6cf811ad3542?w=400&q=75'
+},
+{
+  name:'Bridgetown',
+  country:'Barbados',
+  region:'North America',
+  lat:13.0975,
+  lng:-59.6167,
+  description:'Caribbean heritage, island culture, and the beauty of Barbados.',
+  image:'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&q=75'
+}
 ];
  
 const CONTENT_TYPES = {
@@ -52,13 +106,19 @@ const CONTENT_TYPES = {
 // We'll replace these with article-level classifications
 // when we connect the WordPress API.
 const destinationTypes = {
-  'Norway|Bergen': ['guide'],
-  'Norway|Oslo': ['guide'],
-  'Japan|Tokyo': ['story'],
-  'Guyana|Georgetown': ['guide'],
-  'United States|Austin': ['guide'],
-  'United States|Brooklyn': ['guide'],
-  'United States|Hot Springs': ['guide', 'dark']
+  'Norway|Bergen':['guide'],
+  'Norway|Oslo':['guide'],
+  'Japan|Tokyo':['story'],
+  'Guyana|Georgetown':['guide'],
+  'United States|Austin':['guide'],
+  'United States|Brooklyn':['guide'],
+  'United States|Hot Springs':['guide','dark'],
+  'United States|Tyler':['guide'],
+  'United States|College Station':['guide'],
+  'United States|Galveston':['guide'],
+  'United States|Mammoth Cave':['guide'],
+  'Mexico|Mexico City':['guide'],
+  'Barbados|Bridgetown':['guide']
 };
 
 function getDestinationTypes(destination) {
@@ -66,7 +126,8 @@ function getDestinationTypes(destination) {
   return destinationTypes[key] || ['guide'];
 }
 
-const flags={'Norway':'🇳🇴','Japan':'🇯🇵','Guyana':'🇬🇾','United States':'🇺🇸'};
+const flags={'Norway':'🇳🇴','Japan':'🇯🇵','Guyana':'🇬🇾','United States':'🇺🇸','Mexico':'🇲🇽',
+'Barbados':'🇧🇧',};
 const regions=['All','North America','South America','Europe','Asia','Africa','Oceania'];
 let region='All',view='countries',selectedCountry=null,query='';
 const filters=document.getElementById('filters'),results=document.getElementById('results'),summary=document.getElementById('summary');
@@ -111,14 +172,20 @@ function safe(text){return String(text).replace(/[&<>"']/g,c=>({'&':'&amp;','<':
 const wordpressArticles = [];
 
 const articleLocations = {
-  267: 'Norway|Bergen',
-  257: 'Norway|Oslo',
-  224: 'Japan|Tokyo',
-  173: 'Guyana|Georgetown',
-  213: 'United States|Austin',
-  194: 'United States|Brooklyn',
-  176: 'United States|Hot Springs',
-  180: 'United States|Hot Springs'
+  267:'Norway|Bergen',
+  257:'Norway|Oslo',
+  224:'Japan|Tokyo',
+  173:'Guyana|Georgetown',
+  213:'United States|Austin',
+  194:'United States|Brooklyn',
+  176:'United States|Hot Springs',
+  180:'United States|Hot Springs',
+  240:'United States|Tyler',
+  228:'United States|College Station',
+  190:'United States|Galveston',
+  185:'United States|Mammoth Cave',
+  160:'Mexico|Mexico City',
+  105:'Barbados|Bridgetown'
 };
 
 const articleTypes = {
