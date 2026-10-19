@@ -107,7 +107,89 @@ function countryCities(c){return destinations.filter(d=>d.country===c)}
 function countryRegion(c){return countryCities(c)[0].region}
 function countryCoords(c){const list=countryCities(c);return [list.reduce((s,d)=>s+d.lat,0)/list.length,list.reduce((s,d)=>s+d.lng,0)/list.length]}
 function safe(text){return String(text).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function popupCity(d){return '<div class="popup"><h3>'+safe(d.name+', '+d.country)+'</h3><p>'+safe(d.description)+'</p>'+(d.url?'<p><a target="_blank" rel="noopener noreferrer" href="'+safe(d.url)+'">Read the story →</a></p>':'<p>Story links will be added as articles are connected.</p>')+'</div>'}
+
+const wordpressArticles = [];
+
+const articleLocations = {
+  267: 'Norway|Bergen',
+  257: 'Norway|Oslo',
+  224: 'Japan|Tokyo',
+  173: 'Guyana|Georgetown',
+  213: 'United States|Austin',
+  194: 'United States|Brooklyn',
+  176: 'United States|Hot Springs',
+  180: 'United States|Hot Springs'
+};
+
+const articleTypes = {
+  224: 'story',
+  180: 'dark'
+};
+
+async function loadWordPressArticles() {
+  try {
+    const response = await fetch(
+      'https://theguidingtraveler.com/wp-json/wp/v2/posts?per_page=100&_fields=id,link,title'
+    );
+
+    if (!response.ok) throw new Error('WordPress API unavailable');
+
+    const posts = await response.json();
+
+    wordpressArticles.length = 0;
+
+    posts.forEach(post => {
+      const location = articleLocations[post.id];
+
+      if (!location) return;
+
+      wordpressArticles.push({
+        location,
+        title: post.title.rendered
+          .replace(/<[^>]*>/g, '')
+          .replace(/&amp;/g, '&'),
+        url: post.link,
+        type: articleTypes[post.id] || 'guide'
+      });
+    });
+
+    cityMarkers.forEach((marker, index) => {
+      marker.setPopupContent(popupCity(destinations[index]));
+    });
+
+  } catch (error) {
+    console.error('Could not load WordPress articles:', error);
+  }
+}
+
+function popupCity(d) {
+  const key = `${d.country}|${d.name}`;
+  const articles = wordpressArticles.filter(a => a.location === key);
+
+  let html =
+    '<div class="popup">' +
+    '<h3>' + safe(d.name + ', ' + d.country) + '</h3>' +
+    '<p>' + safe(d.description) + '</p>';
+
+  if (!articles.length) {
+    html += '<p>Stories coming soon.</p>';
+  } else {
+    articles.forEach(article => {
+      const type = CONTENT_TYPES[article.type];
+
+      html +=
+        '<p style="border-top:1px solid #ddd;padding-top:9px">' +
+        '<span style="color:' + type.color + ';font-weight:bold">' +
+        type.icon + ' ' + type.label +
+        '</span>' +
+        '<br><a href="' + safe(article.url) +
+        '" target="_blank" rel="noopener noreferrer">' +
+        safe(article.title) + ' →</a></p>';
+    });
+  }
+
+  return html + '</div>';
+}
 
 destinations.forEach((d, i) => {
   const m = L.marker([d.lat, d.lng], {
@@ -127,4 +209,5 @@ function zoomCountry(c){const points=countryCities(c).map(d=>[d.lat,d.lng]);if(p
 function fitVisible(){const list=filteredCities();if(list.length>0){map.fitBounds(L.latLngBounds(list.map(d=>[d.lat,d.lng])).pad(.3),{maxZoom:list.length===1?5:6})}}
 function render(){filters.querySelectorAll('button').forEach(b=>{const active=b.dataset.region===region;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active))});document.querySelectorAll('[data-view]').forEach(b=>{const active=b.dataset.view===view;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active))});results.replaceChildren();const list=filteredCities();const visibleCountries=[...new Set(list.map(d=>d.country))].sort();const drill=selectedCountry&&!query&&view==='countries'&&visibleCountries.includes(selectedCountry);const showCities=view==='cities'||Boolean(query)||drill;summary.textContent=list.length+' cities · '+visibleCountries.length+' countries'+(drill?' · '+selectedCountry:'');if(drill){const back=document.createElement('button');back.className='back';back.textContent='← All countries';back.onclick=()=>{selectedCountry=null;render();fitVisible()};results.appendChild(back);const h=document.createElement('h2');h.className='country-heading';h.textContent=(flags[selectedCountry]||'🌍')+' '+selectedCountry;results.appendChild(h)}if(showCities){const displayed=drill?list.filter(d=>d.country===selectedCountry):list;displayed.forEach(d=>results.appendChild(makeCity(d)))}else{visibleCountries.forEach(c=>{const b=document.createElement('button');b.className='country-button';const flag=document.createElement('span');flag.className='country-flag';flag.textContent=flags[c]||'🌍';const label=document.createElement('span');const title=document.createElement('div');title.className='country-name';title.textContent=c;const sub=document.createElement('div');sub.className='country-count';sub.textContent=list.filter(d=>d.country===c).length+' destinations · '+countryRegion(c);label.append(title,sub);const arrow=document.createElement('span');arrow.className='chevron';arrow.textContent='›';b.append(flag,label,arrow);b.onclick=()=>{selectedCountry=c;render();zoomCountry(c)};results.appendChild(b)})}if(!list.length){const p=document.createElement('p');p.className='empty';p.textContent='No destinations match your search.';results.appendChild(p)}for(const m of cityMarkers.values())map.removeLayer(m);for(const m of countryMarkers.values())map.removeLayer(m);if(showCities){const visible=drill?list.filter(d=>d.country===selectedCountry):list;visible.forEach(d=>cityMarkers.get(destinations.indexOf(d)).addTo(map))}else{visibleCountries.forEach(c=>countryMarkers.get(c).addTo(map))}}
 render();setTimeout(()=>map.invalidateSize(),150);
+loadWordPressArticles();
 </script></body></html>
