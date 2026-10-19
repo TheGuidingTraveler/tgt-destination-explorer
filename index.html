@@ -12,7 +12,14 @@ const destinations=[
 {name:'Brooklyn, New York',region:'North America',lat:40.6782,lng:-73.9442,description:'Neighborhood stories from New York City.',image:'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=400&q=75'},
 {name:'Hot Springs, Arkansas',region:'North America',lat:34.5037,lng:-93.0552,description:'Historic bathhouses and natural beauty.',image:'https://images.unsplash.com/photo-1473448912268-2022ce9509d8?w=400&q=75'}
 ];
-const regions=['All','North America','South America','Europe','Asia','Africa','Oceania'];let region='All';let query='';const map=
+const regions=['All','North America','South America','Europe','Asia','Africa','Oceania'];
+let region='All';
+let query='';
+
+const map = L.map('map', {
+  worldCopyJump: true
+}).setView([20, 0], 2);
+
 L.tileLayer(
   'https://api.maptiler.com/maps/streets-v2-dark/{z}/{x}/{y}.png?key=IbCRlpP7NPxjKbHHSX1U',
   {
