@@ -79,7 +79,27 @@ if(MAPTILER_KEY==='PASTE_YOUR_MAPTILER_KEY_HERE'){
 }else{
  L.tileLayer('https://api.maptiler.com/maps/streets-v2-dark/{z}/{x}/{y}.png?key='+encodeURIComponent(MAPTILER_KEY),{attribution:'&copy; OpenStreetMap contributors &copy; MapTiler',tileSize:256,zoomOffset:0,maxZoom:19}).addTo(map);
 }
-const cityIcon=L.divIcon({className:'',html:'<div class="pin"></div>',iconSize:[15,15],iconAnchor:[7,7]});
+
+function cityIcon(destination) {
+  const types = getDestinationTypes(destination);
+
+  // Purple takes priority for After Dark locations.
+  // Blue represents Stories; copper represents Travel Guides.
+  const type = types.includes('dark')
+    ? 'dark'
+    : types.includes('story')
+      ? 'story'
+      : 'guide';
+
+  const color = CONTENT_TYPES[type].color;
+
+  return L.divIcon({
+    className: '',
+    html: `<div class="pin" style="background:${color};border-color:${color};"></div>`,
+    iconSize: [15, 15],
+    iconAnchor: [7, 7]
+  });
+}
 const countryIcon=n=>L.divIcon({className:'',html:'<div class="country-pin">'+n+'</div>',iconSize:[34,34],iconAnchor:[17,17]});
 const cityMarkers=new Map(),countryMarkers=new Map();
 const countries=[...new Set(destinations.map(d=>d.country))].sort();
@@ -88,7 +108,15 @@ function countryRegion(c){return countryCities(c)[0].region}
 function countryCoords(c){const list=countryCities(c);return [list.reduce((s,d)=>s+d.lat,0)/list.length,list.reduce((s,d)=>s+d.lng,0)/list.length]}
 function safe(text){return String(text).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function popupCity(d){return '<div class="popup"><h3>'+safe(d.name+', '+d.country)+'</h3><p>'+safe(d.description)+'</p>'+(d.url?'<p><a target="_blank" rel="noopener noreferrer" href="'+safe(d.url)+'">Read the story →</a></p>':'<p>Story links will be added as articles are connected.</p>')+'</div>'}
-destinations.forEach((d,i)=>{const m=L.marker([d.lat,d.lng],{icon:cityIcon}).bindPopup(popupCity(d));cityMarkers.set(i,m)});
+
+destinations.forEach((d, i) => {
+  const m = L.marker([d.lat, d.lng], {
+    icon: cityIcon(d)
+  }).bindPopup(popupCity(d));
+
+  cityMarkers.set(i, m);
+});
+
 countries.forEach(c=>{const m=L.marker(countryCoords(c),{icon:countryIcon(countryCities(c).length)});m.bindPopup('<div class="popup"><h3>'+safe(c)+'</h3><p>'+countryCities(c).length+' destinations</p></div>');m.on('click',()=>{selectedCountry=c;view='countries';query='';document.getElementById('search').value='';render();zoomCountry(c)});countryMarkers.set(c,m)});
 regions.forEach(r=>{const b=document.createElement('button');b.type='button';b.textContent=r;b.dataset.region=r;b.onclick=()=>{region=r;selectedCountry=null;render();fitVisible()};filters.appendChild(b)});
 document.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>{view=b.dataset.view;selectedCountry=null;render();fitVisible()});
